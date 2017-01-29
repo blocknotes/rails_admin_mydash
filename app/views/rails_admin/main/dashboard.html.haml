@@ -1,5 +1,14 @@
-/ TODO: show admin notes ?
 / TODO: show audit ?
+
+- if @admin_notices
+  %div.panel.panel-info
+    %div.panel-heading
+      %h3.panel-title= t 'admin.dashboard.notices'
+    / %div.panel-body
+    %table.table
+      - @admin_notices.each do |notice|
+        %tr
+          %td= notice.message
 
 - if @abstract_models
   %table.table.table-condensed.table-striped.dashboard-table
