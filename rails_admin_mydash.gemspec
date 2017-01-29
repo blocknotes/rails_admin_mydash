@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = RailsAdminMydash::VERSION
   s.authors     = ["Mattia Roccoberton"]
   s.email       = ["mat@blocknot.es"]
-  s.homepage    = "http://blocknot.es/blocknotes/rails_admin_mydash"
-  s.summary     = "RailsAdmin Mydash"
-  s.description = "Custom Dashboard for RailsAdmin"
+  s.homepage    = "https://github.com/blocknotes/rails_admin_mydash"
+  s.summary     = "Rails Admin Mydash"
+  s.description = "An alternative dashboard for rails_admin"
   s.license     = "MIT"
   s.files = Dir["{app,lib,vendor}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
   # s.add_dependency "rails", "~> 5.0.1"
