@@ -8,6 +8,8 @@ Features:
 
 - show optionally admin notices (to show informations to the users)
 
+- auditing / history table
+
 - disabled default progress bars with statistics (minor performance improvement)
 
 ## Installation

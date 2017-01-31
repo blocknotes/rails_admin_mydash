@@ -11,7 +11,7 @@ RailsAdmin::Config::Actions::Dashboard.class_eval do
 
   register_instance_option :controller do
     proc do
-      # @history = @auditing_adapter && @auditing_adapter.latest || []
+      @history = @auditing_adapter && @auditing_adapter.latest || []
       @count = {}
       @last_rows = {}
       @abstract_models = RailsAdmin::Config.visible_models(controller: self).collect(&:abstract_model)

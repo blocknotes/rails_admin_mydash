@@ -1,5 +1,3 @@
-/ TODO: show audit ?
-
 - if @admin_notices
   %div.panel.panel-info
     %div.panel-heading
@@ -38,8 +36,8 @@
             %td.c4.links
               %ul.inline.list-inline= menu_for :collection, abstract_model, nil, true
 
-/ - if @auditing_adapter && authorized?(:history_index)
-/   #block-tables.block
-/     .content
-/       %h2= t("admin.actions.history_index.menu")
-/       = render partial: 'rails_admin/main/dashboard_history'
+- if @auditing_adapter && authorized?(:history_index)
+  #block-tables.block
+    .content
+      %h2= t("admin.actions.history_index.menu")
+      = render partial: 'mydashboard_history'
