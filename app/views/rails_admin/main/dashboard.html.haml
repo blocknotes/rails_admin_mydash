@@ -4,7 +4,7 @@
   td.c2 { text-align: center; }
 
 %div#mydash
-  - if @admin_notices
+  - if @admin_notices && @admin_notices.any?
     %div.panel.panel-info
       %div.panel-heading
         %h3.panel-title= t 'admin.dashboard.notices'
