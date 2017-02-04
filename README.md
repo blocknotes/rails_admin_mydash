@@ -35,7 +35,7 @@ dashboard do
   ga_chart_id 'ga:YYYYYYYYY'
   ga_start_date '60daysAgo'
   ga_end_date '30daysAgo'
-  ga_metrics 'ga:pageviews'
+  ga_metrics 'ga:sessions,ga:pageviews'
 end
 ```
 
