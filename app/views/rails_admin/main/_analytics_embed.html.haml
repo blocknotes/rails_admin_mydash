@@ -1,0 +1,78 @@
+:css
+  #ga-auth-button { color: #888; font-style: italic; text-align: center; }
+  #ga-timeline { overflow-x: scroll; }
+  #ga-timeline .gapi-analytics-data-chart > div > div { margin: 0 auto; }
+  #ga-view-selector table { margin: 5px auto 0 auto; }
+
+.panel.panel-info
+  .panel-heading
+    %h3.panel-title= t 'admin.dashboard.google_analytics'
+  .panel-body
+    %section#ga-auth-button
+    %section#ga-view-selector
+    %section#ga-timeline
+
+:javascript
+  var gapi_init = false;
+  if( !$('#gapi-script').length ) {
+    // Include once
+    (function(w,d,s,g,js,fjs){
+      g=w.gapi||(w.gapi={});g.analytics={q:[],ready:function(cb){this.q.push(cb)}};
+      js=d.createElement(s);fjs=d.getElementsByTagName(s)[0];
+      js.id='gapi-script';
+      js.src='https://apis.google.com/js/platform.js';
+      fjs.parentNode.insertBefore(js,fjs);js.onload=function(){g.load('analytics')};
+    }(window,document,'script'));
+    gapi_init = true; 
+  }
+
+:javascript
+  var timeline;
+  var ga_chart_id = '#{@action.ga_chart_id}';
+  var ga_metrics = '#{@action.ga_metrics ? @action.ga_metrics : "ga:sessions"}';
+  var ga_start_date = '#{@action.ga_start_date ? @action.ga_start_date : "30daysAgo"}';
+  var ga_end_date = '#{@action.ga_end_date ? @action.ga_end_date : "yesterday"}';
+  var ga_client_id = '#{@action.ga_key}';
+  gapi.analytics.ready(function() {
+    // >> Create the view selector.
+    if( !ga_chart_id ) {
+      var viewSelector = new gapi.analytics.ViewSelector({
+        container: 'ga-view-selector'
+      });
+      viewSelector.on( 'change', function( ids ) {
+        // console.log( ids );
+        timeline.set( { query: { ids: ids } } ).execute();
+      });
+    }
+    // >> Create the timeline chart.
+    timeline = new gapi.analytics.googleCharts.DataChart({
+      reportType: 'ga',
+      query: {
+        'dimensions': 'ga:date',
+        'metrics': ga_metrics,
+        'start-date': ga_start_date,
+        'end-date': ga_end_date,
+      },
+      chart: {
+        type: 'LINE',
+        container: 'ga-timeline'
+      }
+    });
+    if( gapi_init ) {
+      // >> Authorize the user.
+      gapi.analytics.auth.authorize({
+        container: 'ga-auth-button',
+        clientid: ga_client_id,
+      });
+      // >> Hook up the components to work together.
+      gapi.analytics.auth.on('success', function(response) {
+        if( ga_chart_id ) timeline.set( { query: { ids: ga_chart_id } } ).execute();
+        else viewSelector.execute();
+        $('#ga-auth-button').fadeOut( 500 );
+      });
+    }
+    else {
+      if( ga_chart_id ) timeline.set( { query: { ids: ga_chart_id } } ).execute();
+      else viewSelector.execute();
+    }
+  });

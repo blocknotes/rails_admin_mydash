@@ -4,21 +4,52 @@ A rails_admin alternative dashboard. It overrides the default dashboard componen
 
 Features:
 
-- show the last 3 records for each model (useful to reach the last items easily)
+- last 3 records for each model (useful to reach the last items easily)
 
-- show optionally admin notices (to show informations to the users)
+- Google Analytics data if enabled
 
-- show auditing / history table if enabled
+- admin notices if enabled (to show informations to the users)
 
-- hid breadcrump and nav tabs on the dashboard
+- auditing / history table if enabled
 
-- disable counters progress bars (minor performance improvement)
+- no breadcrump and nav tabs on the dashboard
+
+- no counters progress bars (minor performance improvement)
 
 ## Installation
 
 - Add the gem to Gemfile (**after** rails_admin gem): `gem 'rails_admin_mydash'`
 
 - Execute `bundle`
+
+## Google Analytics
+
+- To enable Google Analytics follow this guide: [Google Analytics Embed API](https://developers.google.com/analytics/devguides/reporting/embed/v1/getting-started)
+
+- Set the options in rails_admin config:
+
+```ruby
+# In config.actions block:
+dashboard do
+  ga_key 'XXX.apps.googleusercontent.com'
+  ga_chart_id 'ga:YYYYYYYYY'
+  ga_start_date '60daysAgo'
+  ga_end_date '30daysAgo'
+  ga_metrics 'ga:pageviews'
+end
+```
+
+Options:
+
+- ga_key: required - CLIENT_ID parameter (obtained from [Google API Client Libraries](https://developers.google.com/api-client-library/javascript/start/start-js#Setup) - [ID client OAuth 2.0](https://console.developers.google.com/apis/credentials))
+
+- ga_chart_id: optional - chart to show, if not specified the selector is shown
+
+- ga_start_date: optional - starting date, default: '30daysAgo'
+
+- ga_end_date: optional - ending date, default: 'yesterday'
+
+- ga_metrics: optional - type of data to show, default: 'ga:sessions'
 
 ## Admin notices
 

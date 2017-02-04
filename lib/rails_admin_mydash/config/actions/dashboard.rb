@@ -48,6 +48,26 @@ RailsAdmin::Config::Actions::Dashboard.class_eval do
     false
   end
 
+  register_instance_option :ga_chart_id do
+    nil
+  end
+
+  register_instance_option :ga_end_date do
+    'yesterday'
+  end
+
+  register_instance_option :ga_key do
+    nil
+  end
+
+  register_instance_option :ga_metrics do
+    'ga:sessions'
+  end
+
+  register_instance_option :ga_start_date do
+    '30daysAgo'
+  end
+
   register_instance_option :last_records do
     3
   end

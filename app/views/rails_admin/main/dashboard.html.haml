@@ -4,42 +4,50 @@
   td.c2 { text-align: center; }
 
 %div#mydash
-  - if @admin_notices && @admin_notices.any?
+  .row
+    - if @action.ga_key
+      %div{class:@action.ga_key ? 'col-md-7' : 'col-md-12'}
+        = render partial: 'analytics_embed'
+    - if @admin_notices && @admin_notices.any?
+      %div{class:@action.ga_key ? 'col-md-5' : 'col-md-12'}
+        %div.panel.panel-info
+          %div.panel-heading
+            %h3.panel-title= t 'admin.dashboard.notices'
+          / %div.panel-body
+          %table.table
+            - @admin_notices.each do |notice|
+              %tr
+                %td= notice.message
+  - if @abstract_models
     %div.panel.panel-info
       %div.panel-heading
-        %h3.panel-title= t 'admin.dashboard.notices'
-      / %div.panel-body
-      %table.table
-        - @admin_notices.each do |notice|
+        %h3.panel-title= t 'admin.dashboard.records'
+      %table.table.table-condensed.table-striped.dashboard-table
+        %thead
           %tr
-            %td= notice.message
-  - if @abstract_models
-    %table.table.table-condensed.table-striped.dashboard-table
-      %thead
-        %tr
-          %th.shrink.model-name= t 'admin.table_headers.model_name'
-          %th.shrink.records= t 'admin.table_headers.records'
-          %th.last-records= t 'admin.table_headers.last_records'
-          %th.shrink.controls
-      %tbody
-        - @abstract_models.each do |abstract_model|
-          - if authorized? :index, abstract_model
-            - index_path = index_path(model_name: abstract_model.to_param)
-            - row_class = "#{cycle("odd", "even")}#{" link" if index_path} #{abstract_model.param_key}_links"
-            %tr{class: row_class, :"data-link" => index_path}
-              %td.c1
-                %span.show= link_to capitalize_first_letter(abstract_model.config.label_plural), index_path, class: 'pjax'
-              %td.c2
-                - if @count[abstract_model.model.name]
-                  = @count[abstract_model.model.name]
-              %td.c3
-                - if @last_rows[abstract_model.model.name]
-                  %div.last-records-list
-                    - @last_rows[abstract_model.model.name].each do |row|
-                      - if row.respond_to?( :name ) && ( show_action = action(:show, abstract_model, row) )
-                        %div.last-records-item= link_to(row.name, url_for(action: show_action.action_name, model_name: abstract_model.to_param, id: row.id), class: 'pjax')
-              %td.c4.links
-                %ul.inline.list-inline= menu_for :collection, abstract_model, nil, true
+            %th.shrink.model-name= t 'admin.table_headers.model_name'
+            %th.shrink.records= t 'admin.table_headers.records'
+            %th.last-records= t 'admin.table_headers.last_records'
+            %th.shrink.controls
+        %tbody
+          - @abstract_models.each do |abstract_model|
+            - if authorized? :index, abstract_model
+              - index_path = index_path(model_name: abstract_model.to_param)
+              - row_class = "#{cycle("odd", "even")}#{" link" if index_path} #{abstract_model.param_key}_links"
+              %tr{class: row_class, :"data-link" => index_path}
+                %td.c1
+                  %span.show= link_to capitalize_first_letter(abstract_model.config.label_plural), index_path, class: 'pjax'
+                %td.c2
+                  - if @count[abstract_model.model.name]
+                    = @count[abstract_model.model.name]
+                %td.c3
+                  - if @last_rows[abstract_model.model.name]
+                    %div.last-records-list
+                      - @last_rows[abstract_model.model.name].each do |row|
+                        - if row.respond_to?( :name ) && ( show_action = action(:show, abstract_model, row) )
+                          %div.last-records-item= link_to(row.name, url_for(action: show_action.action_name, model_name: abstract_model.to_param, id: row.id), class: 'pjax')
+                %td.c4.links
+                  %ul.inline.list-inline= menu_for :collection, abstract_model, nil, true
   - if @auditing_adapter && authorized?(:history_index)
     #block-tables.block
       .content
