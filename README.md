@@ -1,14 +1,12 @@
 # RailsAdminMydash [![Gem Version](https://badge.fury.io/rb/rails_admin_mydash.svg)](https://badge.fury.io/rb/rails_admin_mydash)
 
-A rails_admin alternative dashboard. It overrides the default dashboard component.
-
-Demo: [heroku app](http://rails-admin-material.herokuapp.com/admin/)
+A [rails_admin](https://github.com/sferik/rails_admin) alternative dashboard. It overrides the default dashboard component.
 
 Features:
 
 - last 3 records for each model (useful to reach the last items easily)
 
-- Google Analytics data if enabled
+- Google Analytics widget embed if enabled
 
 - admin notices if enabled (to show informations to the users)
 
@@ -17,6 +15,8 @@ Features:
 - no breadcrump and nav tabs on the dashboard
 
 - no counters progress bars (minor performance improvement)
+
+Demo: [heroku app](http://rails-admin-material.herokuapp.com/admin/)
 
 ## Installation
 
