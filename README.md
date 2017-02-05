@@ -26,7 +26,7 @@ Demo: [heroku app](http://rails-admin-material.herokuapp.com/admin/)
 
 ## Google Analytics
 
-This feature allows the access to Analytics data only after signing in with enabled Google accounts.
+This feature allows the access to Analytics data only after signing in with an enabled Google account.
 
 To enable Google Analytics follow this guide: [Google Analytics Embed API](https://developers.google.com/analytics/devguides/reporting/embed/v1/getting-started)
 
@@ -83,6 +83,8 @@ end
 ## Options
 
 - *admin_notices* [String]: model to use to show admin messages
+
+- *ga_key* [String], *ga_chart_id* [String], *ga_start_date* [String], *ga_end_date* [String], *ga_metrics* [String]: see Google Analytics section above
 
 - *last_records* [Integer]: number of records to show per model
 
