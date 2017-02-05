@@ -1,3 +1,12 @@
+# PROJECT UNMAINTAINED
+
+> *This project is not maintained anymore*
+>
+> *If you like it or continue to use it fork it please.*
+
+---
+---
+
 # RailsAdminMydash [![Gem Version](https://badge.fury.io/rb/rails_admin_mydash.svg)](https://badge.fury.io/rb/rails_admin_mydash)
 
 A [rails_admin](https://github.com/sferik/rails_admin) alternative dashboard. It overrides the default dashboard component.
