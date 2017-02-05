@@ -2,6 +2,8 @@
 
 A rails_admin alternative dashboard. It overrides the default dashboard component.
 
+Demo: [heroku app](http://rails-admin-material.herokuapp.com/admin/)
+
 Features:
 
 - last 3 records for each model (useful to reach the last items easily)
@@ -24,7 +26,7 @@ Features:
 
 ## Google Analytics
 
-This feature allow the access to Analytics data only after signing in with enabled google accounts
+This feature allows the access to Analytics data only after signing in with enabled Google accounts.
 
 To enable Google Analytics follow this guide: [Google Analytics Embed API](https://developers.google.com/analytics/devguides/reporting/embed/v1/getting-started)
 
