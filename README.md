@@ -24,9 +24,17 @@ Features:
 
 ## Google Analytics
 
-- To enable Google Analytics follow this guide: [Google Analytics Embed API](https://developers.google.com/analytics/devguides/reporting/embed/v1/getting-started)
+This feature allow the access to Analytics data only after signing in with enabled google accounts
 
-- Set the options in rails_admin config:
+To enable Google Analytics follow this guide: [Google Analytics Embed API](https://developers.google.com/analytics/devguides/reporting/embed/v1/getting-started)
+
+- In [console](https://console.developers.google.com/project) create a new project
+
+- In [console API](https://console.developers.google.com/apis/library) enable Analytics API
+
+- In [console credentials](https://console.developers.google.com/apis/credentials) create an OAuth client ID, options: web application, authorized origins: add your admin host (es. http://www.myadmindomain.abc)
+
+- Insert the client ID in rails_admin config:
 
 ```ruby
 # In config.actions block:
