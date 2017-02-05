@@ -1,5 +1,6 @@
 :css
-  #ga-auth-button { color: #888; font-style: italic; text-align: center; }
+  #ga-auth-button { color: #888; cursor: pointer; font-style: italic; text-align: center; }
+  #ga-message { color: red; font-style: italic; text-align: center; }
   #ga-timeline { overflow-x: scroll; }
   #ga-timeline .gapi-analytics-data-chart > div > div { margin: 0 auto; }
   #ga-view-selector table { margin: 5px auto 0 auto; }
@@ -9,11 +10,13 @@
     %h3.panel-title= t 'admin.dashboard.google_analytics'
   .panel-body
     %section#ga-auth-button
+    %section#ga-message
     %section#ga-view-selector
     %section#ga-timeline
 
 :javascript
   var gapi_init = false;
+  var gapi_signin = false;
   if( !$('#gapi-script').length ) {
     // Include once
     (function(w,d,s,g,js,fjs){
@@ -34,8 +37,8 @@
   var ga_end_date = '#{@action.ga_end_date ? @action.ga_end_date : "yesterday"}';
   var ga_client_id = '#{@action.ga_key}';
   gapi.analytics.ready(function() {
-    // >> Create the view selector.
     if( !ga_chart_id ) {
+      // console.log( 'Create the view selector' );
       var viewSelector = new gapi.analytics.ViewSelector({
         container: 'ga-view-selector'
       });
@@ -44,7 +47,7 @@
         timeline.set( { query: { ids: ids } } ).execute();
       });
     }
-    // >> Create the timeline chart.
+    // console.log( 'Create the timeline chart' );
     timeline = new gapi.analytics.googleCharts.DataChart({
       reportType: 'ga',
       query: {
@@ -58,17 +61,28 @@
         container: 'ga-timeline'
       }
     });
+    // timeline.on('success', function(response) { console.log( 'DataChart success' ); });
+    timeline.on('error', function(response) {
+      $('#ga-message').html( 'Google API error: ' + response.error.message );
+      if( gapi_signin ) gapi.analytics.auth.signOut();
+    });
     if( gapi_init ) {
-      // >> Authorize the user.
+      // console.log( 'gapi_init - Authorize the user' );
       gapi.analytics.auth.authorize({
         container: 'ga-auth-button',
         clientid: ga_client_id,
+        userInfoLabel: 'Google Analytics account: '
       });
-      // >> Hook up the components to work together.
-      gapi.analytics.auth.on('success', function(response) {
+      gapi.analytics.auth.on('signIn', function() {
+        gapi_signin = true;
         if( ga_chart_id ) timeline.set( { query: { ids: ga_chart_id } } ).execute();
         else viewSelector.execute();
         $('#ga-auth-button').fadeOut( 500 );
+      });
+      // gapi.analytics.auth.on('signOut', function() { console.log( 'signOut' ); });
+      // gapi.analytics.auth.on('needsAuthorization', function() { console.log( 'needsAuthorization' ); });
+      gapi.analytics.auth.on('error', function(response) {
+        $('#ga-message').html( 'Google API error: ' + response.error.message );
       });
     }
     else {
