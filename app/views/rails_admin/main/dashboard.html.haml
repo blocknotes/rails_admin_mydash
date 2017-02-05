@@ -7,7 +7,7 @@
   .row
     - if @action.ga_key
       %div{class:@action.ga_key ? 'col-md-7' : 'col-md-12'}
-        = render partial: 'analytics_embed'
+        = render partial: 'widget_analytics'
     - if @admin_notices && @admin_notices.any?
       %div{class:@action.ga_key ? 'col-md-5' : 'col-md-12'}
         %div.panel.panel-info
@@ -52,4 +52,4 @@
     #block-tables.block
       .content
         %h2= t("admin.actions.history_index.menu")
-        = render partial: 'mydashboard_history'
+        = render partial: 'widget_history'
